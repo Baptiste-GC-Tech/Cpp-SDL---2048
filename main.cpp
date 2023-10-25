@@ -2,11 +2,21 @@
 #include "Class/board.hpp"
 #include "Class/tile.hpp"
 
-void main()
+int main()
 {
     // Values and utilities
-    int boardDim[2] = {4, 4};
-    Tile* tileList[16];
+    int boardSize[] = {4, 4};
+    Board board(boardSize);
 
-    Board board(boardDim);
+    int coord1[] = {1, 1};
+    Tile test1(2, coord1);
+    int coord2[] = {2, 3};
+    Tile test2(8, coord2);
+    int coord3[] = {1, 4};
+    Tile test3(4, coord3);
+
+    Tile::peek();
+    board.drawBoard();
+
+    return 0;
 }
