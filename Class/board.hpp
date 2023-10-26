@@ -14,5 +14,9 @@ class Board
 
         void spawnTiles();
         void drawBoard();
+        void moveTiles();
+
+        bool chkLoss();
+        bool chkWin();
 };
 

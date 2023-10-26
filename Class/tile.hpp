@@ -22,4 +22,3 @@ class Tile
 
     friend class Board;
 };
-

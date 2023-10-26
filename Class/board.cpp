@@ -14,23 +14,60 @@
 #define SLH (char)196 // ─
 #define ICR (char)197 // ┼
 
-
+// Constructor
 Board::Board(int size[])
 {
     this->width = size[0];
     this->height = size[1];
 }
 
+// Destructor
 Board::~Board()
 {
     std::cout << "BOARD WAS PURGED\n";
 }
 
+/** \brief
+ * Tile Generator
+ */
 void Board::spawnTiles()
 {
-    std::cout << "There is no void board::spawnTiles()\nThe devs are lazy :p\n";
+    std::cout << "J'ai ouvert la saint christie\n";
+
+    int St;
+    if (St >= 1)
+    {
+        for (int i = 0; i < St; i++)
+        {
+            int coord[] = { 1 + (rand() % 4), 1 + (rand() % 4) };
+            std::cout << "Coord l40\n";
+
+            // Check if the coordinate is empty
+            if ((coord)) {
+                if (rand() % 10 < 7) new Tile(2, coord);
+                else new Tile(4, coord);
+
+                std::cout << St << "<--- Coord l45\n";
+            }
+        }
+        St = 1;
+    }
+    else
+    {
+        int coord[] = { 1 + (rand() % 4), 1 + (rand() % 4) };
+        std::cout << St << "<--- Coord l40\n";
+
+        // Check if the coordinate is empty
+        if (rand() % 10 < 7) new Tile(2, coord);
+        else new Tile(4, coord);
+    }
 }
 
+/** \brief
+ * Board drawing function
+ * Can adapt to any size board
+ * If there is data that would render outside of the board, they will not cause an issue, instead they'll never be read
+ */
 void Board::drawBoard()
 {
     // Drawing top of board
@@ -86,4 +123,82 @@ void Board::drawBoard()
         std::cout << IPU << SLH;
     }
     std::cout << CBR << "\n";
+}
+
+/** \brief
+ * Move and Fuse tiles upon input
+ */
+void Board::moveTiles()
+{
+    for (auto i : Tile::tileList)
+    {
+        std::cout << i << ", " << i->value << ", [" << i->coord[0] << "," << i->coord[1] << "]\n";
+    }
+};
+
+
+/** \brief
+ * Check condition for losing the game
+ * This function isn't in main() since it needs access to the private data of the Tile class
+ * Board is the friend of Tile
+ *
+ * \return Boolean used in main to update the gameOver variable
+ */
+ bool Board::chkLoss()
+ {
+    // if(Tile::tileList.size() == 16)
+    if(true)
+    {
+        std::cout << "\n\nTILE LIST FULL\n\n";
+
+        // Goes through all tiles to test every pairs (vertically and horizontally)
+        for(Tile* testTile: Tile::tileList)
+        {
+            std::cout << "Testing on : [" << testTile->coord[0] << ", " << testTile->coord[1] << "]... ";
+
+            // Tests if testTile is in the bottom-left corner
+            if(testTile->coord[0] == this->height && testTile->coord[1] == this->width)
+            {
+                std::cout << "RED\n";
+            }
+
+            // If not, tests if testTile is in the bottom-most row
+            else if(testTile->coord[0] == this->height)
+            {
+                std::cout << "BLUE\n";
+            }
+
+            // If not, tests if testTile is in the left-most column
+            else if(testTile->coord[1] == this->width)
+            {
+                std::cout << "ORANGE\n";
+            }
+
+            else
+            {
+                std::cout << "GREEN\n";
+            }
+
+        }
+    }
+    return false;
+ }
+
+ /** \brief
+  * Check condition for wining the game
+  * This function isn't in main() since it needs access to the private data of the Tile class
+  * Board is the friend of Tile
+  *
+  * \return Boolean used in main() to update the gameOver variable
+  */
+bool Board::chkWin()
+{
+    for(Tile* t: Tile::tileList)
+    {
+        if(t->value == 2048)
+        {
+            std::cout << "\nWow you did it ! :D\n\n\n" << std::endl;
+            return true;
+        }
+    }
 }
