@@ -5,23 +5,23 @@
 
 class TileSet
 {
-    private:
-        std::vector<std::vector<int>> tiles;
+private:
+    std::vector<std::vector<int>> tiles;
 
-    public:
-        // Constructors & Destructors
-        TileSet(int size[]);
-        ~TileSet();
+public:
+    // Constructors & Destructors
+    TileSet(int size[]);
+    ~TileSet();
 
-        // Getters
-        int getTile(int coord[2]);
+    // Getters
+    int getTile(int coord[2]);
 
-        // Setters
-        void setTile(int value, int coord[2]);
+    // Setters
+    void setTile(int value, int coord[2]);
 
-        // "Journalists"
-        bool valueScan(int value);
-        bool isFull();
+    // "Journalists"
+    bool valueScan(int value);
+    bool isFull();
 };
 
 #endif

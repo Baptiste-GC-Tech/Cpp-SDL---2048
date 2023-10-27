@@ -1,8 +1,8 @@
 #include <iostream>
 #include <ctime>
 #include <random>
-#include "tile.hpp"
-#include "board.hpp"
+#include "./tile.hpp"
+#include "./board.hpp"
 
 #define CTL (char)218 // ┌
 #define CTR (char)191 // ┐
@@ -17,7 +17,7 @@
 #define ICR (char)197 // ┼
 
 // Constructor
-Board::Board(int size[], TileSet* tileSetPtr)
+Board::Board(int size[], TileSet *tileSetPtr)
 {
     // Seeds for tile generation later ;3
     srand(time(NULL));
@@ -39,22 +39,49 @@ Board::~Board()
  */
 void Board::spawnTiles()
 {
+
     bool success = false;
     int targetCoord[2];
 
     // Loops until it successfully generated a tile
-    while(!success)
+    while (!success)
     {
         // Picks a tile at random
-        targetCoord[0] = (rand()%width) + 1;
-        targetCoord[1] = (rand()%height) + 1;
+        targetCoord[0] = (rand() % width);
+        targetCoord[1] = (rand() % height);
 
         // Check if the target is a free space
-        if(this->tileSet->getTile(targetCoord) == 0)
+        if (this->tileSet->getTile(targetCoord) == 0)
         {
-            // Generates a tile between 2(90% of the time) and 4(10% of the time)
-            if(rand()%100 < 90) { this->tileSet->setTile(2, targetCoord); }
-            else { this->tileSet->setTile(4, targetCoord); }
+            // Generates a tile between 2(70% of the time) and 4(30% of the time)
+            if (St != 1)
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    srand(time(NULL));
+
+                    if (rand() % 100 < 70)
+                    {
+                        this->tileSet->setTile(2, targetCoord);
+                    }
+                    else
+                    {
+                        this->tileSet->setTile(4, targetCoord);
+                    }
+                }
+                St -= 1;
+            }
+            else
+            {
+                if (rand() % 100 < 70)
+                {
+                    this->tileSet->setTile(2, targetCoord);
+                }
+                else
+                {
+                    this->tileSet->setTile(4, targetCoord);
+                }
+            }
 
             success = true;
         }
@@ -70,19 +97,18 @@ void Board::drawBoard()
 {
     // Drawing top of board
     std::cout << CTL << SLH;
-    for(int w = 0;  w < this->width-1;  w++)
+    for (int w = 0; w < this->width - 1; w++)
     {
         std::cout << IPD << SLH;
     }
     std::cout << CTR << "\n";
 
-
     // Drawing tiles and spacers
     int targetCoord[2];
-    for(int x = 0;  x < this->height;  x++)
+    for (int x = 0; x < this->height; x++)
     {
         std::cout << SLV;
-        for(int y = 0;  y < this->width;  y++)
+        for (int y = 0; y < this->width; y++)
         {
             // Updates the targeted tile to show, and associate its value with a letter
             targetCoord[0] = x;
@@ -122,16 +148,15 @@ void Board::drawBoard()
             case 2048:
                 std::cout << 'K' << SLV;
                 break;
-
             }
         }
         std::cout << "\n";
 
         // Drawing spacers
-        if(x < this->height-1)
+        if (x < this->height - 1)
         {
             std::cout << IPR << SLH;
-            for(int w = 0;  w < width-1;  w++)
+            for (int w = 0; w < width - 1; w++)
             {
                 std::cout << ICR << SLH;
             }
@@ -141,7 +166,7 @@ void Board::drawBoard()
 
     // Drawing bottom of board
     std::cout << CBL << SLH;
-    for(int w = 0;  w < this->width-1;  w++)
+    for (int w = 0; w < this->width - 1; w++)
     {
         std::cout << IPU << SLH;
     }
@@ -151,8 +176,7 @@ void Board::drawBoard()
 /** \brief
  * Move and Fuse tiles upon input
  */
-void Board::moveTiles()
-{
+void Board::moveTiles(){
     /*
     for (auto i : Tile::tileList)
     {
@@ -161,7 +185,6 @@ void Board::moveTiles()
     */
 };
 
-
 /** \brief
  * Check condition for losing the game
  * This function isn't in main() since it needs access to the private data of the Tile class
@@ -169,52 +192,54 @@ void Board::moveTiles()
  *
  * \return Boolean used in main to update the gameOver variable
  */
- bool Board::chkLoss()
- {
-     int targetCoord[2];
-     int targetNeighbor[2];
+bool Board::chkLoss()
+{
+    int targetCoord[2];
+    int targetNeighbor[2];
 
-     // Only tests for defeat if the TileSet has no more empty spaces
-     if(this->tileSet->isFull())
-     {
-         // Skirms through every tiles except for the bottom-most row and the left-most col
-         for(int x = 0;  x < this->width - 1;  x++)
-         {
-             for(int y = 0;  y < this->height - 1;  y++)
-             {
-                 // Updates the targeted tile for the following test
-                 targetCoord[0] = x;
-                 targetCoord[1] = y;
+    // Only tests for defeat if the TileSet has no more empty spaces
+    if (this->tileSet->isFull())
+    {
+        // Skirms through every tiles except for the bottom-most row and the left-most col
+        for (int x = 0; x < this->width - 1; x++)
+        {
+            for (int y = 0; y < this->height - 1; y++)
+            {
+                // Updates the targeted tile for the following test
+                targetCoord[0] = x;
+                targetCoord[1] = y;
 
-                 // Updates the neighbor tile coordinates for testing
-                 targetNeighbor = targetCoord;
-                 targetNeighbor[0] =+ 1;
+                // Updates the neighbor tile coordinates for testing
+                targetNeighbor[0] = targetCoord[0];
+                targetNeighbor[0] = +1;
 
-                 // Tests both the bottom and left neighbors
-                 if(this->tileSet->getTile(targetCoord) == this->tileSet->getTile(targetNeighbor))
-                 {
-                     return false;
-                 }
-             }
-         }
-     }
- }
+                // Tests both the bottom and left neighbors
+                if (this->tileSet->getTile(targetCoord) == this->tileSet->getTile(targetNeighbor))
+                {
+                    return false;
+                }
+            }
+        }
+    }
+}
 
- /** \brief
-  * Check condition for wining the game
-  * This function isn't in main() since it needs access to the private data of the Tile class
-  * Board is the friend of Tile
-  *
-  * \return Boolean used in main() to update the gameOver variable
-  */
+/** \brief
+ * Check condition for wining the game
+ * This function isn't in main() since it needs access to the private data of the Tile class
+ * Board is the friend of Tile
+ *
+ * \return Boolean used in main() to update the gameOver variable
+ */
+/*
 bool Board::chkWin()
 {
-    for(Tile* t: Tile::tileList)
+    for (Tile* t : Tile::tileList)
     {
-        if(t->value == 2048)
+        if (t->value == 2048)
         {
             std::cout << "\nWow you did it ! :D\n\n\n" << std::endl;
             return true;
         }
     }
 }
+*/

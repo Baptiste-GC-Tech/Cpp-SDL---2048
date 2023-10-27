@@ -1,7 +1,7 @@
 #include <iostream> // cout
 #include <conio.h>  // _getch
-#include "Class/board.hpp"
-#include "Class/tile.hpp"
+#include "./board.hpp"
+#include "./tile.hpp"
 
 // Value of input
 #define KEY_UP 72
@@ -12,31 +12,27 @@
 
 int main()
 {
+    srand(time(NULL));
 
-
-    // Initializing default board
-    int boardSize[] = {4, 4};
-    //TileSet tileSet(boardSize);
-    //Board board(boardSize, &tileSet);
+    //Initializing default board
+    int boardSize[] = { 4, 4 };
+    TileSet tileSet(boardSize);
+    Board board(boardSize, &tileSet);
 
     // Initializing debug previous Board
-    //Board prevBoard(boardSize);
+    Board prevBoard(boardSize, &tileSet);
 
-    /*
     // Main game loop
     bool gameOver = false;
-    while(!gameOver)
+    while (!gameOver)
     {
         // $-DEBUG: Updating and drawing prevBoard for tile movement and fusion debuging
         std::cout << "Previous Board state : \n";
         prevBoard = board;
-        prevBoard.drawBoard();
+        board.drawBoard();
 
         // Generating random tiles and drawing the board
-        for(int i = 0;  i < 16;  i++)
-        {
-            board.spawnTiles();
-        }
+        board.spawnTiles();
         board.drawBoard();
 
         // Loss check (before player input since generation light have screwed them already)
@@ -66,11 +62,11 @@ int main()
         }
 
         // Win check (after the player input since they might have crated a 2048 tile :D
-        gameOver = board.chkWin();
+        //gameOver = board.chkWin();
 
         // TODO : Offer the opportunity to play again
     }
-    */
+
 
     return 0;
 }
