@@ -1,5 +1,5 @@
-#include <iostream>
-#include <conio.h>
+#include <iostream> // cout
+#include <conio.h>  // _getch
 #include "Class/board.hpp"
 #include "Class/tile.hpp"
 
@@ -12,22 +12,17 @@
 
 int main()
 {
+
+
     // Initializing default board
     int boardSize[] = {4, 4};
-    Board board(boardSize);
+    //TileSet tileSet(boardSize);
+    //Board board(boardSize, &tileSet);
 
     // Initializing debug previous Board
-    Board prevBoard(boardSize);
+    //Board prevBoard(boardSize);
 
-    // $-DEBUG: Dummy way to create tiles
-    // TODO : Remove this when gameplay is fully functiosnal
-    /*int coord1[] = {1, 1};
-    int coord2[] = {2, 3};
-    int coord3[] = {1, 4};
-    Tile test1(2, coord1);
-    Tile test2(8, coord2);
-    Tile test3(4, coord3);*/
-
+    /*
     // Main game loop
     bool gameOver = false;
     while(!gameOver)
@@ -75,6 +70,7 @@ int main()
 
         // TODO : Offer the opportunity to play again
     }
+    */
 
     return 0;
 }

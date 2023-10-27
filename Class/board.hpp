@@ -1,6 +1,7 @@
 #ifndef BOARD_HPP
 #define BOARD_HPP
-#endif
+
+#include "tile.hpp"
 
 class Board
 {
@@ -8,15 +9,18 @@ class Board
         int width;
         int height;
 
+        TileSet* tileSet;
+
     public:
-        Board(int size[]);
+        Board(int size[], TileSet* tileSetPtr);
         ~Board();
 
         void spawnTiles();
         void drawBoard();
-        void moveTiles();
+        void moveTiles();  // RUINED
 
-        bool chkLoss();
-        bool chkWin();
+        bool chkLoss(); // RUINED
+        bool chkWin();  // RUINED
 };
 
+#endif
