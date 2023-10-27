@@ -148,6 +148,9 @@ void Board::drawBoard()
             case 2048:
                 std::cout << 'K' << SLV;
                 break;
+            default:
+                std::cout << ' ' << SLV;
+                break;
             }
         }
         std::cout << "\n";
@@ -172,18 +175,6 @@ void Board::drawBoard()
     }
     std::cout << CBR << "\n";
 }
-
-/** \brief
- * Move and Fuse tiles upon input
- */
-void Board::moveTiles(){
-    /*
-    for (auto i : Tile::tileList)
-    {
-        std::cout << i << ", " << i->value << ", [" << i->coord[0] << "," << i->coord[1] << "]\n";
-    }
-    */
-};
 
 /** \brief
  * Check condition for losing the game
@@ -230,16 +221,17 @@ bool Board::chkLoss()
  *
  * \return Boolean used in main() to update the gameOver variable
  */
-/*
 bool Board::chkWin()
 {
-    for (Tile* t : Tile::tileList)
+    if(this->tileSet->valueScan(2048))
     {
-        if (t->value == 2048)
-        {
-            std::cout << "\nWow you did it ! :D\n\n\n" << std::endl;
-            return true;
-        }
+        return true;
     }
 }
-*/
+
+
+/** \brief
+ * Moves and fuses the tiles within the TileSet
+ * Adapts depending on the direction of the input, going through the farther tiles, and moving them line by line towards the "wall"
+ */
+

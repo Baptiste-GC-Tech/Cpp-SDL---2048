@@ -1,7 +1,7 @@
 #include <iostream> // cout
 #include <conio.h>  // _getch
-#include "./board.hpp"
-#include "./tile.hpp"
+#include "Class/board.hpp"
+#include "Class/tile.hpp"
 
 // Value of input
 #define KEY_UP 72
@@ -12,8 +12,6 @@
 
 int main()
 {
-    srand(time(NULL));
-
     //Initializing default board
     int boardSize[] = { 4, 4 };
     TileSet tileSet(boardSize);
@@ -22,6 +20,9 @@ int main()
     // Initializing debug previous Board
     Board prevBoard(boardSize, &tileSet);
 
+    // Setting up the board
+    board.spawnTiles();
+
     // Main game loop
     bool gameOver = false;
     while (!gameOver)
@@ -29,7 +30,7 @@ int main()
         // $-DEBUG: Updating and drawing prevBoard for tile movement and fusion debuging
         std::cout << "Previous Board state : \n";
         prevBoard = board;
-        board.drawBoard();
+        prevBoard.drawBoard();
 
         // Generating random tiles and drawing the board
         board.spawnTiles();
@@ -47,15 +48,19 @@ int main()
             {
             case KEY_DOWN:
                 std::cout << "KeyDown \n\n";
+                tileSet.mfDown();
                 break;
             case KEY_UP:
                 std::cout << "KeyUp \n\n";
+                tileSet.mfUp();
                 break;
             case KEY_LEFT:
                 std::cout << "KeyLeft \n\n";
+                tileSet.mfLeft();
                 break;
             case KEY_RIGHT:
                 std::cout << "KeyRight \n\n";
+                tileSet.mfRight();
                 break;
             }
             break;
