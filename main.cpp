@@ -1,7 +1,7 @@
-#include <iostream>
-#include <conio.h>
-#include "Class/board.hpp"
-#include "Class/tile.hpp"
+#include <iostream> // cout
+#include <conio.h>  // _getch
+#include "./board.hpp"
+#include "./tile.hpp"
 
 // Value of input
 #define KEY_UP 72
@@ -12,25 +12,21 @@
 
 int main()
 {
-    // Initializing default board
-    int boardSize[] = {4, 4};
-    Board board(boardSize);
+
+    //Initializing default board
+    int boardSize[] = { 4, 4 };
+    TileSet tileSet(boardSize);
+    Board board(boardSize, &tileSet);
 
     // Initializing debug previous Board
-    Board prevBoard(boardSize);
+    Board prevBoard(boardSize, &tileSet);
 
-    // $-DEBUG: Dummy way to create tiles
-    // TODO : Remove this when gameplay is fully functiosnal
-    /*int coord1[] = {1, 1};
-    int coord2[] = {2, 3};
-    int coord3[] = {1, 4};
-    Tile test1(2, coord1);
-    Tile test2(8, coord2);
-    Tile test3(4, coord3);*/
+    // Setting up the board
+    board.spawnTiles();
 
     // Main game loop
     bool gameOver = false;
-    while(!gameOver)
+    while (!gameOver)
     {
         // $-DEBUG: Updating and drawing prevBoard for tile movement and fusion debuging
         std::cout << "Previous Board state : \n";
@@ -38,10 +34,7 @@ int main()
         prevBoard.drawBoard();
 
         // Generating random tiles and drawing the board
-        for(int i = 0;  i < 16;  i++)
-        {
-            board.spawnTiles();
-        }
+        board.spawnTiles();
         board.drawBoard();
 
         // Loss check (before player input since generation light have screwed them already)
@@ -56,15 +49,19 @@ int main()
             {
             case KEY_DOWN:
                 std::cout << "KeyDown \n\n";
+                tileSet.mfDown();
                 break;
             case KEY_UP:
                 std::cout << "KeyUp \n\n";
+                tileSet.mfUp();
                 break;
             case KEY_LEFT:
                 std::cout << "KeyLeft \n\n";
+                tileSet.mfLeft();
                 break;
             case KEY_RIGHT:
                 std::cout << "KeyRight \n\n";
+                tileSet.mfRight();
                 break;
             }
             break;
@@ -72,9 +69,10 @@ int main()
 
         // Win check (after the player input since they might have crated a 2048 tile :D
         gameOver = board.chkWin();
-
         // TODO : Offer the opportunity to play again
     }
 
+
     return 0;
+    
 }

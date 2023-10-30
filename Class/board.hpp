@@ -1,22 +1,28 @@
 #ifndef BOARD_HPP
 #define BOARD_HPP
-#endif
+
+#include "./tile.hpp"
 
 class Board
 {
-    private:
-        int width;
-        int height;
+private:
+    int width;
+    int height;
+    int St = 2;
 
-    public:
-        Board(int size[]);
-        ~Board();
+    TileSet *tileSet;
 
-        void spawnTiles();
-        void drawBoard();
-        void moveTiles();
+public:
+    Board(int size[], TileSet *tileSetPtr);
+    ~Board();
 
-        bool chkLoss();
-        bool chkWin();
+    void spawnTiles();
+    void drawBoard();
+    void moveTiles(char direction); // RUINED
+
+    bool Replay();
+    bool chkLoss();
+    bool chkWin();
 };
 
+#endif
