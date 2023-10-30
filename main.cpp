@@ -1,7 +1,11 @@
 #include <iostream> // cout
 #include <conio.h>  // _getch
 #include "./board.hpp"
+#include "./windows.hpp"
 #include "./tile.hpp"
+
+#include <SDL.h>
+#include <stdio.h>
 
 // Value of input
 #define KEY_UP 72
@@ -10,9 +14,20 @@
 #define KEY_RIGHT 77
 #define KEY_X 1
 
-int main()
+int main(int argc, char *argv[])
 {
+    // Pop-up windows already
+    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Salur", "Projet SDL", NULL);
+    // Windows size
+    windows window("SDL K", 800, 600);
 
+    while (!window.isClosed())
+    {
+        window.pollEvents();
+        window.clear();
+    }
+
+    /*
     //Initializing default board
     int boardSize[] = { 4, 4 };
     TileSet tileSet(boardSize);
@@ -66,13 +81,19 @@ int main()
             }
             break;
         }
+        //Win check
+        board.chkWin();
 
-        // Win check (after the player input since they might have crated a 2048 tile :D
-        gameOver = board.chkWin();
-        // TODO : Offer the opportunity to play again
+        /*
+        * Win check and lose check
+        * Can choise play again or leave
+
+        if (board.chkWin() == true || board.chkLoss() == true)
+        {
+            gameOver = board.Replay();
+        }
     }
-
+    */
 
     return 0;
-    
 }
