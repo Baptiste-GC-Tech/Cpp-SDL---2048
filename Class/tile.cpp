@@ -27,8 +27,8 @@ void TileSet::setTile(int value, int coord[2])
 {
     this->tiles[coord[0]][coord[1]] = value;
     std::cout << value << " Valeur "
-              << "[" << coord[0] << coord[1] << "]"
-              << " Coord \n";
+        << "[" << coord[0] << coord[1] << "]"
+        << " Coord \n";
 }
 
 // "Journalists"
@@ -62,6 +62,10 @@ bool TileSet::isFull()
             {
                 return false;
             }
+            else if (tiles[x][y] == ' ') {
+                std::cout << "tuagagner";
+                return true;
+            }
         }
     }
 
@@ -81,7 +85,8 @@ void TileSet::mfUp() {
                         tiles[aboveRow][col] *= 2;
                         tiles[row][col] = 0;
                         break; // Stop checking higher tiles for this tile
-                    } else if (tiles[aboveRow][col] != 0) {
+                    }
+                    else if (tiles[aboveRow][col] != 0) {
                         // There is a non-zero tile above, so stop checking
                         break;
                     }
@@ -116,7 +121,8 @@ void TileSet::mfDown() {
                         tiles[belowRow][col] *= 2;
                         tiles[row][col] = 0;
                         break; // Stop checking lower tiles for this tile
-                    } else if (tiles[belowRow][col] != 0) {
+                    }
+                    else if (tiles[belowRow][col] != 0) {
                         // There is a non-zero tile below, so stop checking
                         break;
                     }
@@ -151,7 +157,8 @@ void TileSet::mfLeft() {
                         tiles[row][leftCol] *= 2;
                         tiles[row][col] = 0;
                         break; // Stop checking tiles to the left for this tile
-                    } else if (tiles[row][leftCol] != 0) {
+                    }
+                    else if (tiles[row][leftCol] != 0) {
                         // There is a non-zero tile to the left, so stop checking
                         break;
                     }
@@ -186,7 +193,8 @@ void TileSet::mfRight() {
                         tiles[row][rightCol] *= 2;
                         tiles[row][col] = 0;
                         break; // Stop checking tiles to the right for this tile
-                    } else if (tiles[row][rightCol] != 0) {
+                    }
+                    else if (tiles[row][rightCol] != 0) {
                         // There is a non-zero tile to the right, so stop checking
                         break;
                     }

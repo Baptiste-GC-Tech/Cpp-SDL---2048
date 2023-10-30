@@ -1,7 +1,7 @@
 #include <iostream> // cout
 #include <conio.h>  // _getch
-#include "Class/board.hpp"
-#include "Class/tile.hpp"
+#include "./board.hpp"
+#include "./tile.hpp"
 
 // Value of input
 #define KEY_UP 72
@@ -12,6 +12,7 @@
 
 int main()
 {
+
     //Initializing default board
     int boardSize[] = { 4, 4 };
     TileSet tileSet(boardSize);
@@ -67,11 +68,11 @@ int main()
         }
 
         // Win check (after the player input since they might have crated a 2048 tile :D
-        //gameOver = board.chkWin();
-
+        gameOver = board.chkWin();
         // TODO : Offer the opportunity to play again
     }
 
 
     return 0;
+    
 }
