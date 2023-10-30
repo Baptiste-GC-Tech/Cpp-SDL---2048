@@ -62,10 +62,6 @@ bool TileSet::isFull()
             {
                 return false;
             }
-            else if (tiles[x][y] == ' ') {
-                std::cout << "tuagagner";
-                return true;
-            }
         }
     }
 
