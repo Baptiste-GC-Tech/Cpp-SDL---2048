@@ -2,6 +2,12 @@
 #include <SDL.h>
 #include <string>
 
+struct Form
+{
+    SDL_Rect rect;
+    Uint32 couleur;
+};
+
 class windows
 {
 
@@ -13,15 +19,16 @@ private:
     bool init();
     bool _closed = false;
 
-    SDL_Window *_windows = nullptr;
-    SDL_Renderer *_renderer = nullptr;
+    SDL_Window* _windows;
+    SDL_Renderer* _renderer;
+    SDL_Surface* _surface;
 
 public:
-    windows(const std::string &title, int w, int h);
+    windows(const std::string& title, int w, int h);
     ~windows();
 
     void pollEvents();
-    void clear() const;
+    void DrawForm();
 
     inline bool isClosed() const { return _closed; }
 };

@@ -1,7 +1,7 @@
 #include "./windows.hpp"
 #include <iostream>
 
-windows::windows(const std::string &title, int w, int h) : _title(title), _w(w), _h(h)
+windows::windows(const std::string& title, int w, int h) : _title(title), _w(w), _h(h)
 {
     if (!init())
     {
@@ -32,11 +32,11 @@ bool windows::init()
 
     // Size windows setting
     _windows = SDL_CreateWindow(_title.c_str(),
-                                SDL_WINDOWPOS_CENTERED,
-                                SDL_WINDOWPOS_CENTERED,
-                                _w,
-                                _h,
-                                0);
+        SDL_WINDOWPOS_CENTERED,
+        SDL_WINDOWPOS_CENTERED,
+        _w,
+        _h,
+        0);
 
     if (_windows == nullptr)
     {
@@ -72,23 +72,41 @@ void windows::pollEvents()
     }
 }
 
+
 // Create a rederer color
-void windows::clear() const
+void windows::DrawForm()
 {
-    SDL_SetRenderDrawColor(_renderer, 0, 230, 255, 255); // color
+    SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255); // Set First background color
     SDL_RenderClear(_renderer);
 
-    // draw a rect
     SDL_Rect rect;
-    rect.w = 550;
-    rect.h = 400;
+    SDL_SetRenderDrawColor(_renderer, 110, 110, 100, 255); // Set Second rectangle color
+    rect.w = 580;
+    rect.h = 580;
     rect.x = (_w / 2) - (rect.w / 2);
     rect.y = (_h / 2) - (rect.h / 2);
+    SDL_RenderFillRect(_renderer, &rect); // Draw the rectangle
 
-    SDL_SetRenderDrawColor(_renderer, 255, 75, 0, 255); // color
-    SDL_RenderFillRect(_renderer, &rect);               // Draw the rect
 
-    SDL_RenderPresent(_renderer);
+
+    rect.w = 125;
+    rect.h = 125;
+
+    for (int i = 0; i < 4; i++)
+    {
+        SDL_SetRenderDrawColor(_renderer, 175, 175, 175, 255); // Set rectangle color
+        for (int j = 0; j < 4; j++)
+        {
+
+            // Calculate the position of the current rectangle
+            rect.x = (int)((i*140) + ((_w / 2) - (rect.w * 2.175)));
+            rect.y = (int)((j*140) + ((_h / 2) - (rect.h * 2.175)));
+
+            SDL_RenderFillRect(_renderer, &rect); // Draw the rectangle
+        }
+    }
+    SDL_RenderPresent(_renderer); // Update the renderer
+
 }
 
 /*

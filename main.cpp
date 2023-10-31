@@ -14,17 +14,18 @@
 #define KEY_RIGHT 77
 #define KEY_X 1
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
     // Pop-up windows already
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Salur", "Projet SDL", NULL);
     // Windows size
-    windows window("SDL K", 800, 600);
+    windows window("SDL K", 1080, 720);
+
 
     while (!window.isClosed())
     {
         window.pollEvents();
-        window.clear();
+        window.DrawForm();
     }
 
     /*
