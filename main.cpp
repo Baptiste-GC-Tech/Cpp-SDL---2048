@@ -32,9 +32,9 @@ int main(int argc, char* argv[])
 
     // Pop-up windows already
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Salur", "Projet SDL", NULL);
-    
     // Windows size
-    windows window("SDL K", 800, 600);
+    windows window("SDL K", 1920, 1080);
+
 
     // $# DEBUG
     // Creating dummy gameObj and trying to show it on screen
@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
     while (!window.isClosed())
     {
         window.pollEvents();
-        window.clear();
+        window.DrawForm();
     }
 
     /*

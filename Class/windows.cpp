@@ -1,7 +1,7 @@
 #include "./windows.hpp"
 #include <iostream>
 
-windows::windows(const std::string &title, int w, int h) : _title(title), _w(w), _h(h)
+windows::windows(const std::string& title, int w, int h) : _title(title), _w(w), _h(h)
 {
     if (!init())
     {
@@ -32,19 +32,22 @@ bool windows::init()
 
     // Size windows setting
     _windows = SDL_CreateWindow(_title.c_str(),
-                                SDL_WINDOWPOS_CENTERED,
-                                SDL_WINDOWPOS_CENTERED,
-                                _w,
-                                _h,
-                                0);
+        SDL_WINDOWPOS_CENTERED,
+        SDL_WINDOWPOS_CENTERED,
+        _w,
+        _h,
+        0);
 
     if (_windows == nullptr)
     {
         std::cerr << "failed windows";
         return 0;
     }
+    //----------------------------------------------------------------------------------------------
 
-    // Now we can create a windows color
+
+    //----------------------------------------------------------------------------------------------
+    // Create a windows color
     _renderer = SDL_CreateRenderer(_windows, -1, SDL_RENDERER_ACCELERATED);
     if (_renderer == nullptr)
     {
@@ -52,6 +55,7 @@ bool windows::init()
         return 0;
     }
     return true;
+
 }
 
 // For don't crash
@@ -66,29 +70,88 @@ void windows::pollEvents()
         case SDL_QUIT:
             _closed = true;
             break;
+        case SDL_KEYDOWN:
+            switch (event.key.keysym.sym)
+            {
+            case SDLK_LEFT:
+                while (_x >= -(_w / 2 - 400))
+                {
+                    _x -= 20;
+                }
+                std::cout << "tamer";
+                break;
+            case SDLK_RIGHT:
+                while (_x <= _w / 2 - 400)
+                {
+                    _x += 20;
+                }
+                break;
+            case SDLK_UP:
+                while (_y >= -(_h / 2 - 400))
+                {
+                    _y -= 20;
+                }
+
+                break;
+            case SDLK_DOWN:
+                while (_y <= _h / 2 - 400)
+                {
+                    _y += 20;
+                }
+                break;
+            case SDLK_SPACE:
+                _closed = true;
+                break;
+            default:
+                break;
+            }
         default:
             break;
         }
     }
+
 }
 
+
 // Create a rederer color
-void windows::clear() const
+void windows::DrawForm()
 {
+<<<<<<< HEAD
     // SDL_SetRenderDrawColor(_renderer, 0, 230, 255, 255); // color
     // SDL_RenderClear(_renderer);
+=======
+    SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255); // Set First background color
+    SDL_RenderClear(_renderer);
+>>>>>>> 5bfd3e8304b7b2729e947648bea553058cc0207b
 
-    // draw a rect
     SDL_Rect rect;
-    rect.w = 550;
-    rect.h = 400;
-    rect.x = (_w / 2) - (rect.w / 2);
-    rect.y = (_h / 2) - (rect.h / 2);
+    SDL_SetRenderDrawColor(_renderer, 110, 110, 100, 255); // Set Second rectangle color
+    rect.w = 700;
+    rect.h = 700;
+    rect.x = (_w / 2) - (rect.w / 2) + _x;
+    rect.y = (_h / 2) - (rect.h / 2) + _y;
+    SDL_RenderFillRect(_renderer, &rect); // Draw the rectangle
 
-    SDL_SetRenderDrawColor(_renderer, 255, 75, 0, 255); // color
-    SDL_RenderFillRect(_renderer, &rect);               // Draw the rect
 
-    SDL_RenderPresent(_renderer);
+
+    rect.w = 150;
+    rect.h = 150;
+
+    for (int i = 0; i < 4; i++)
+    {
+        SDL_SetRenderDrawColor(_renderer, 175, 175, 175, 255); // Set rectangle color
+        for (int j = 0; j < 4; j++)
+        {
+
+            // Calculate the position of the current rectangle
+            rect.x = (int)((i * 175) + ((_w / 2) - (rect.w * 2.25))) + _x;
+            rect.y = (int)((j * 175) + ((_h / 2) - (rect.h * 2.25))) + _y;
+
+            SDL_RenderFillRect(_renderer, &rect); // Draw the rectangle
+        }
+    }
+    SDL_RenderPresent(_renderer); // Update the renderer
+
 }
 
 // Getters
