@@ -1,5 +1,12 @@
-bin/
-obj/
-*.cbp
-*.depend
-*.layout
+*.sln
+*.vcxproj
+*.vcxproj.*
+*.dll
+*.config
+CppProperties.json
+
+.vs/
+Debug/
+Release/
+packages/
+x64/

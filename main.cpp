@@ -1,11 +1,12 @@
 #include <iostream> // cout
 #include <conio.h>  // _getch
-#include "./board.hpp"
-#include "./windows.hpp"
-#include "./tile.hpp"
+#include "Class/board.hpp"
+#include "Class/windows.hpp"
+#include "Class/tile.hpp"
+#include "Class/gameObj.hpp"
 
-#include <SDL.h>
-#include <stdio.h>
+#include "SDL.h"
+#include "SDL_ttf.h"
 
 // Value of input
 #define KEY_UP 72
@@ -14,12 +15,34 @@
 #define KEY_RIGHT 77
 #define KEY_X 1
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
+    //Initializing default board
+    int boardSize[] = { 4, 4 };
+    TileSet tileSet(boardSize);
+    Board board(boardSize, &tileSet);
+    
+    // Setting up the board
+    board.spawnTiles();
+    board.spawnTiles();
+    board.spawnTiles();
+    board.spawnTiles();
+
+    std::cout << "Hello World!";
+
     // Pop-up windows already
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Salur", "Projet SDL", NULL);
+    
     // Windows size
     windows window("SDL K", 800, 600);
+
+    // $# DEBUG
+    // Creating dummy gameObj and trying to show it on screen
+    int dim[] = { 50, 50 };
+    char label[] = "amogus";
+    GameObj testTile(dim, label);
+    int tilePos[] = {0, 3};
+    testTile.drawTile(window.getRenderer(), 4, tilePos);
 
     while (!window.isClosed())
     {
@@ -28,26 +51,10 @@ int main(int argc, char *argv[])
     }
 
     /*
-    //Initializing default board
-    int boardSize[] = { 4, 4 };
-    TileSet tileSet(boardSize);
-    Board board(boardSize, &tileSet);
-
-    // Initializing debug previous Board
-    Board prevBoard(boardSize, &tileSet);
-
-    // Setting up the board
-    board.spawnTiles();
-
     // Main game loop
     bool gameOver = false;
     while (!gameOver)
     {
-        // $-DEBUG: Updating and drawing prevBoard for tile movement and fusion debuging
-        std::cout << "Previous Board state : \n";
-        prevBoard = board;
-        prevBoard.drawBoard();
-
         // Generating random tiles and drawing the board
         board.spawnTiles();
         board.drawBoard();

@@ -75,8 +75,8 @@ void windows::pollEvents()
 // Create a rederer color
 void windows::clear() const
 {
-    SDL_SetRenderDrawColor(_renderer, 0, 230, 255, 255); // color
-    SDL_RenderClear(_renderer);
+    // SDL_SetRenderDrawColor(_renderer, 0, 230, 255, 255); // color
+    // SDL_RenderClear(_renderer);
 
     // draw a rect
     SDL_Rect rect;
@@ -89,6 +89,12 @@ void windows::clear() const
     SDL_RenderFillRect(_renderer, &rect);               // Draw the rect
 
     SDL_RenderPresent(_renderer);
+}
+
+// Getters
+SDL_Renderer* windows::getRenderer()
+{
+    return this->_renderer;
 }
 
 /*

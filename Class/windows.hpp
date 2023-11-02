@@ -24,4 +24,7 @@ public:
     void clear() const;
 
     inline bool isClosed() const { return _closed; }
+
+    // Getters
+    SDL_Renderer* getRenderer();
 };
