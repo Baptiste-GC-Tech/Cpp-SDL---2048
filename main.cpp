@@ -6,6 +6,7 @@
 
 #include <SDL.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 // Value of input
 #define KEY_UP 72
@@ -17,9 +18,9 @@
 int main(int argc, char* argv[])
 {
     // Pop-up windows already
-    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Salur", "Projet SDL", NULL);
+    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Salut", "Projet SDL", NULL);
     // Windows size
-    windows window("SDL K", 1080, 720);
+    windows window("SDL K", 1920, 1080);
 
 
     while (!window.isClosed())

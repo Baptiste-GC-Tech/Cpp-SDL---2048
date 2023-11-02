@@ -43,8 +43,11 @@ bool windows::init()
         std::cerr << "failed windows";
         return 0;
     }
+    //----------------------------------------------------------------------------------------------
 
-    // Now we can create a windows color
+
+    //----------------------------------------------------------------------------------------------
+    // Create a windows color
     _renderer = SDL_CreateRenderer(_windows, -1, SDL_RENDERER_ACCELERATED);
     if (_renderer == nullptr)
     {
@@ -52,6 +55,7 @@ bool windows::init()
         return 0;
     }
     return true;
+
 }
 
 // For don't crash
@@ -66,10 +70,46 @@ void windows::pollEvents()
         case SDL_QUIT:
             _closed = true;
             break;
+        case SDL_KEYDOWN:
+            switch (event.key.keysym.sym)
+            {
+            case SDLK_LEFT:
+                while (_x >= -(_w / 2 - 400))
+                {
+                    _x -= 20;
+                }
+                std::cout << "tamer";
+                break;
+            case SDLK_RIGHT:
+                while (_x <= _w / 2 - 400)
+                {
+                    _x += 20;
+                }
+                break;
+            case SDLK_UP:
+                while (_y >= -(_h / 2 - 400))
+                {
+                    _y -= 20;
+                }
+
+                break;
+            case SDLK_DOWN:
+                while (_y <= _h / 2 - 400)
+                {
+                    _y += 20;
+                }
+                break;
+            case SDLK_SPACE:
+                _closed = true;
+                break;
+            default:
+                break;
+            }
         default:
             break;
         }
     }
+
 }
 
 
@@ -81,16 +121,16 @@ void windows::DrawForm()
 
     SDL_Rect rect;
     SDL_SetRenderDrawColor(_renderer, 110, 110, 100, 255); // Set Second rectangle color
-    rect.w = 580;
-    rect.h = 580;
-    rect.x = (_w / 2) - (rect.w / 2);
-    rect.y = (_h / 2) - (rect.h / 2);
+    rect.w = 700;
+    rect.h = 700;
+    rect.x = (_w / 2) - (rect.w / 2) + _x;
+    rect.y = (_h / 2) - (rect.h / 2) + _y;
     SDL_RenderFillRect(_renderer, &rect); // Draw the rectangle
 
 
 
-    rect.w = 125;
-    rect.h = 125;
+    rect.w = 150;
+    rect.h = 150;
 
     for (int i = 0; i < 4; i++)
     {
@@ -99,8 +139,8 @@ void windows::DrawForm()
         {
 
             // Calculate the position of the current rectangle
-            rect.x = (int)((i*140) + ((_w / 2) - (rect.w * 2.175)));
-            rect.y = (int)((j*140) + ((_h / 2) - (rect.h * 2.175)));
+            rect.x = (int)((i * 175) + ((_w / 2) - (rect.w * 2.25))) + _x;
+            rect.y = (int)((j * 175) + ((_h / 2) - (rect.h * 2.25))) + _y;
 
             SDL_RenderFillRect(_renderer, &rect); // Draw the rectangle
         }
